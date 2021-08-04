@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?define Manufacturer = "Mark43, Inc"?>
-<?define ProductName = "Mark43 First Responder"?>
+<?define Manufacturer = "Nader, Inc"?>
+<?define ProductName = "Nader Test"?>
 <?define ExeSourceFile = "installer.exe"?>
 <!-- Match new .exe -->
 <?define ProductCode = "*"?>
@@ -14,8 +14,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
-   <Product Id="*" UpgradeCode="$(var.ProductUpgradeCode)" Name="Mark43 First Responder" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)">
-      <Package Id="$(var.ProductCode)" Description="Mark43 First Responder $(var.ProductVersion)" InstallerVersion="200" Compressed="yes" />
+   <Product Id="*" UpgradeCode="$(var.ProductUpgradeCode)" Name="Nader Test" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)">
+      <Package Id="$(var.ProductCode)" Description="Nader Test $(var.ProductVersion)" InstallerVersion="200" Compressed="yes" />
       <!-- We need a CAB to avoid failing an ICE, even though we have no payload. -->
       <Media Id="1" Cabinet="setup.cab" EmbedCab="yes" />
       <!-- We need a component and feature, or msiexec will refuse to load us. -->
@@ -31,39 +31,6 @@
                
             </Component>
          </Directory>
-<!-- 
-
-         <Directory Id="CommonAppDataFolder">
-            <Directory Id="CommonAppMark43" Name="Mark43">
-               <Directory Id="CommonAppFirstResponder" Name="FirstResponder">
-                  <Component Id="CommonAppFirstResponderComponent" Guid="55a76b76-7496-4b47-a7a6-c6fbdd5e51a1">
-                     <CreateFolder>
-                        <util:PermissionEx User="Users" GenericAll="yes" />
-                     </CreateFolder>
-                     <util:RemoveFolderEx Id="RemoveCommonAppFirstResponder" On="uninstall" Property="CommonAppFirstResponder" />
-                  </Component>
-               </Directory>
-            </Directory>
-         </Directory>
-
-         <Directory Id="DesktopFolder" Name="Desktop">
-            <Component Id="ApplicationShortcutDesktop" Guid="*">
-               <Shortcut Id="ApplicationDesktopShortcut"
-                     Name="Text under your icon"
-                     Description="Comment field in your shortcut"
-                     Target="[CommonAppFirstResponder]Mark43 First Responder.exe"
-                     WorkingDirectory="CommonAppFirstResponder"/>
-               <RemoveFolder Id="DesktopFolder" On="uninstall"/>
-               <RegistryValue
-                     Root="HKCU"
-                     Key="Software\MyCompany\MyApplicationName"
-                     Name="installed"
-                     Type="integer"
-                     Value="1"
-                     KeyPath="yes"/>
-            </Component>
-         </Directory> -->
-
       </Directory>
 
 
