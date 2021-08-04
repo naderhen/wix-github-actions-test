@@ -4,6 +4,7 @@
 <?define ExeSourceFile = "installer.exe"?>
 <!-- Match new .exe -->
 <?define ProductCode = "*"?>
+<?define ProductVersion = "1.0.7"?>
 <!-- Regenerate for new upgrade -->
 <?define ProductUpgradeCode = "E85E727E-25D3-49AB-82A4-485509234141"?>
 
