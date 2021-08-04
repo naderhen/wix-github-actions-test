@@ -6,9 +6,9 @@ name: Build
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -39,3 +39,7 @@ jobs:
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
           light.exe
+
+      - name: Make Installer
+        run: |
+          make_installer.bat

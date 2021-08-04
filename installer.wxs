@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define Manufacturer = "Mark43, Inc"?>
+<?define ProductName = "Mark43 First Responder"?>
+<?define ExeSourceFile = "installer.exe"?>
+<!-- Match new .exe -->
+<?define ProductCode = "*"?>
+<!-- Regenerate for new upgrade -->
+<?define ProductUpgradeCode = "E85E727E-25D3-49AB-82A4-485509234141"?>
+
+
+
+<!-- When upgrading, move previous ProductCode here -->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+   <Product Id="*" UpgradeCode="$(var.ProductUpgradeCode)" Name="Mark43 First Responder" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)">
+      <Package Id="$(var.ProductCode)" Description="Mark43 First Responder $(var.ProductVersion)" InstallerVersion="200" Compressed="yes" />
+      <!-- We need a CAB to avoid failing an ICE, even though we have no payload. -->
+      <Media Id="1" Cabinet="setup.cab" EmbedCab="yes" />
+      <!-- We need a component and feature, or msiexec will refuse to load us. -->
+      
+      <!-- <Property Id="ALLUSERS"><![CDATA[2]]></Property> -->
+      
+      <Property Id="ARPSYSTEMCOMPONENT" Value="1" />
+
+      <Directory Id="TARGETDIR" Name="SourceDir">
+         <Directory Id="TempFolder">
+            <Component Id="EmptyComponent" Guid="55a76b76-7496-4b47-a7a6-c6fbdd5e51a4">
+               <CreateFolder />
+               
+            </Component>
+         </Directory>
+<!-- 
+
+         <Directory Id="CommonAppDataFolder">
+            <Directory Id="CommonAppMark43" Name="Mark43">
+               <Directory Id="CommonAppFirstResponder" Name="FirstResponder">
+                  <Component Id="CommonAppFirstResponderComponent" Guid="55a76b76-7496-4b47-a7a6-c6fbdd5e51a1">
+                     <CreateFolder>
+                        <util:PermissionEx User="Users" GenericAll="yes" />
+                     </CreateFolder>
+                     <util:RemoveFolderEx Id="RemoveCommonAppFirstResponder" On="uninstall" Property="CommonAppFirstResponder" />
+                  </Component>
+               </Directory>
+            </Directory>
+         </Directory>
+
+         <Directory Id="DesktopFolder" Name="Desktop">
+            <Component Id="ApplicationShortcutDesktop" Guid="*">
+               <Shortcut Id="ApplicationDesktopShortcut"
+                     Name="Text under your icon"
+                     Description="Comment field in your shortcut"
+                     Target="[CommonAppFirstResponder]Mark43 First Responder.exe"
+                     WorkingDirectory="CommonAppFirstResponder"/>
+               <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+               <RegistryValue
+                     Root="HKCU"
+                     Key="Software\MyCompany\MyApplicationName"
+                     Name="installed"
+                     Type="integer"
+                     Value="1"
+                     KeyPath="yes"/>
+            </Component>
+         </Directory> -->
+
+      </Directory>
+
+
+
+      <!-- Setting the feature to level 0 marks it hidden, so it can't be installed.
+       That prevents getting this MSI registered as an installed product,
+       because it has no features of its own to install. -->
+      <Feature Id="InstallFeature" Level="1">
+         <ComponentRef Id="EmptyComponent" />
+         <!-- <ComponentRef Id="CommonAppFirstResponderComponent" /> -->
+         <!-- <ComponentRef Id="ApplicationShortcutDesktop" />  -->
+      </Feature>
+
+
+
+      <!-- Embed the installer we want to run directly into the MSI database. -->
+      <Binary Id="WrappedExe" SourceFile="$(var.ExeSourceFile)" />
+      <!-- User-configurable properties. One of these corresponds to each documented
+       command-line parameter. Properties cannot be present without a value,
+       so use a conspicuous and difficult to mistake string for the parameters
+       that have no real default values. -->
+      <Property Id="MSI_INSTALL" Value="__DEFAULT__" />
+      <Property Id="DEPT" Value="auth" />
+
+
+      <!-- Always include all of the boolean options on the command line, so we don't
+       have to conditionally decide when to include each one of them. For the
+       directory settings though, we can't put them on the command line with the
+       default values those properties have, so we need a separate action for
+       each possible configuration of those settings, and conditions to select
+       the right action to use based on which properties are configured.
+       WiX throws warning LGHT1076 complaining that these command strings are
+       too long, but they actually work just fine, the warning is spurious. -->
+      <CustomAction Id="RunWithDeptFlag" BinaryKey="WrappedExe" ExeCommand="/dept=[DEPT]" />
+      <!-- When we run the custom actions is kind of arbitrary; this sequencing gets
+       us the least confusing message showing in the MSI progress dialog while
+       the installer runs. Our actions don't need to be sequenced relative
+	   to one another because only one will ever run. -->
+
+      <InstallExecuteSequence>
+         <Custom Action="RunWithDeptFlag" After="ProcessComponents"><![CDATA[(MSI_INSTALL = "__DEFAULT__") AND NOT REMOVE~="ALL"]]></Custom>
+      </InstallExecuteSequence>
+   </Product>
+</Wix>
