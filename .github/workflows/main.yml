@@ -42,4 +42,5 @@ jobs:
 
       - name: Make Installer
         run: |
+          dir
           make_installer.bat
