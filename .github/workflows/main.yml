@@ -25,6 +25,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: NPM Install
+        run: npm install
+
+      - name: Build EXE
+        run: npm run dist
+
+      - name: Copy Installer
+        run: copy "dist\Nader WIX Testing Setup 1.0.1 1.0.7.exe" wix\installer.exe
+
       - name: Check WIX
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
