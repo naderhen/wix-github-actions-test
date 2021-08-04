@@ -32,5 +32,6 @@ jobs:
 
       - name: Make Installer
         run: |
+          $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
           candle.exe installer.wxs -ext WixUtilExtension -dProductVersion=1.0.7
           light.exe installer.wixobj -ext WixUtilExtension -dProductVersion=1.0.7
