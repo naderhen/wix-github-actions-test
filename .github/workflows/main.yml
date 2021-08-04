@@ -32,7 +32,7 @@ jobs:
         run: npm run dist
 
       - name: Copy Installer
-        run: copy "dist\Nader WIX Testing Setup 1.0.1 1.0.7.exe" wix\installer.exe
+        run: copy "dist\Nader WIX Testing Setup 1.0.1.exe" wix\installer.exe
 
       - name: Check WIX
         run: |
