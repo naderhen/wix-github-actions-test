@@ -36,4 +36,6 @@ jobs:
           echo test, and deploy your project.
 
       - name: Check WIX
-        run: echo %WIX%
+        run: |
+          $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
+          light.exe
