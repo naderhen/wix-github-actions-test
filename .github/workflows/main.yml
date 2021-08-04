@@ -35,3 +35,10 @@ jobs:
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
           candle.exe installer.wxs -ext WixUtilExtension
           light.exe installer.wixobj -ext WixUtilExtension
+
+      - name: "Upload Artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: installer.msi
+          retention-days: 1
