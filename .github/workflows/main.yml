@@ -32,5 +32,5 @@ jobs:
 
       - name: Make Installer
         run: |
-          candle installer.wxs -ext WixUtilExtension -dProductVersion=1.0.7
-          light installer.wixobj -ext WixUtilExtension -dProductVersion=1.0.7
+          candle.exe installer.wxs -ext WixUtilExtension -dProductVersion=1.0.7
+          light.exe installer.wixobj -ext WixUtilExtension -dProductVersion=1.0.7
