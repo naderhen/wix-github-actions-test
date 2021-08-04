@@ -35,5 +35,5 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      - name: Run light
-        run: light.exe -Version
+      - name: Check WIX
+        run: echo %WIX%
